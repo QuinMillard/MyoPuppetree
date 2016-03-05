@@ -1,35 +1,5 @@
-//
-//  quoteparsing.cpp
-//  
-//
-//  Created by Talia McCormick on 2016-03-04.
-//
-//   openGL (C graphics)
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-using namespace std;
-
-/*
-//Increases an array of char from oldSize to newSize
-char *growArray(char *pastArray, int oldSize, int newSize){
-    //Allocates space for new array
-    char *newArray = malloc(newSize * sizeof(char));
-    
-    //Copies old array into new array & frees old array
-    for (int i = 0; i < oldSize; i++){
-        newArray[i] = *pastArray;
-        free(pastArray);
-        pastArray++;
-    }
-    
-    //Returns new (larger) array
-    return newArray;
-}*/
 
 void parseQuotes (FILE *readFrom, FILE *writeTo){
 
@@ -40,14 +10,20 @@ void parseQuotes (FILE *readFrom, FILE *writeTo){
     
     //Iterates through, to the end of the read file
     while ((temp = fgetc(readFrom)) != EOF){
+        
+        //Checks if at the end of a quote
         if ((temp == '"') && inQuote){
             inQuote = 0;
             temp = '\n';
             fputc(temp,writeTo);
         }
+        
+        //Checks if at beginning of a quote
         else if (temp == '"'){
             inQuote = 1;
         }
+        
+        //Copies if in quote
         else if (inQuote){
             fputc(temp,writeTo);
         }
